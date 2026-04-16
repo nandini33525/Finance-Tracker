@@ -1,197 +1,79 @@
-# 💰 Finwise — Personal Finance Tracker
+# 💰 AI-Powered Finance Tracker
 
-A full-stack MERN (MongoDB, Express, React, Node.js) finance tracker with JWT authentication, per-user data persistence, and a beautiful dark UI.
+## 📌 Project Description
 
----
+The AI-Powered Finance Tracker is a full-stack web application that helps users manage their daily income and expenses efficiently. It provides intelligent insights based on user spending patterns to improve financial habits and savings.
 
-## 📁 Project Structure
-
-```
-finwise-app/
-├── backend/
-│   ├── config/
-│   │   └── db.js                 # MongoDB connection
-│   ├── middleware/
-│   │   ├── auth.js               # JWT protect middleware
-│   │   └── validate.js           # express-validator rules
-│   ├── models/
-│   │   ├── User.js               # User schema (bcrypt password hashing)
-│   │   ├── Expense.js            # Expense schema
-│   │   └── Goal.js               # Goal schema (with virtual fields)
-│   ├── routes/
-│   │   ├── auth.js               # POST /register, /login, GET /me, PUT /profile, /password
-│   │   ├── expenses.js           # Full CRUD for expenses (user-scoped)
-│   │   └── goals.js              # Full CRUD for goals (user-scoped)
-│   ├── server.js                 # Express entry point
-│   └── package.json
-│
-├── frontend/
-│   └── src/
-│       ├── components/
-│       │   ├── UI.jsx            # Panel, BtnP, BtnG, Field, Modal, Alert, DonutChart…
-│       │   └── Sidebar.jsx       # Navigation sidebar
-│       ├── constants/
-│       │   └── categories.js     # CAT_COLORS, CAT_ICONS, CATEGORIES
-│       ├── hooks/
-│       │   ├── useAuth.js        # Login, register, logout, updateProfile, changePassword
-│       │   ├── useExpenses.js    # Full CRUD + real-time state sync
-│       │   └── useGoals.js       # Full CRUD + real-time state sync
-│       ├── pages/
-│       │   ├── LandingPage.jsx   # Public marketing page
-│       │   ├── AuthPage.jsx      # Sign in / Sign up
-│       │   ├── DashboardPage.jsx # Overview with all widgets
-│       │   ├── ExpensesPage.jsx  # Expense CRUD with filters
-│       │   └── OtherPages.jsx    # Analytics, Insights, Goals, Settings, Profile
-│       ├── styles/
-│       │   └── global.css        # Animations, utility classes, fonts
-│       ├── utils/
-│       │   ├── api.js            # Axios instance with JWT interceptor
-│       │   └── formatters.js     # fmt(), todayStr(), greeting()…
-│       ├── App.js                # Root routing logic
-│       └── index.js              # React entry point
-│
-├── .env                          # Root env (backend reads this)
-└── README.md
-```
+Unlike traditional expense trackers, this system uses AI-based analysis to understand user behavior and suggest better financial decisions.
 
 ---
 
-## 🚀 Setup & Run
+## 🚀 Features
 
-### Prerequisites
-- Node.js 18+
-- MongoDB Atlas account (free tier works perfectly)
-
----
-
-### 1. Clone / unzip the project
-
-```bash
-cd finwise-app
-```
+* 📊 Track daily income and expenses
+* 🗂️ Categorize transactions
+* 📈 View financial insights and reports
+* 🤖 AI-based spending analysis
+* 💡 Smart recommendations for saving money
 
 ---
 
-### 2. Configure Environment Variables
+## 🛠️ Tech Stack
 
-Edit the root `.env` file:
-
-```env
-PORT=5000
-NODE_ENV=development
-MONGO_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/finwise?retryWrites=true&w=majority
-JWT_SECRET=your_random_64_char_secret_here
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:3000
-```
-
-**Generate a strong JWT secret:**
-```bash
-node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-```
+* Frontend: React.js
+* Backend: Node.js, Express.js
+* Database: MongoDB
+* Version Control: Git & GitHub
 
 ---
 
-### 3. Start the Backend
+## ⚙️ Installation & Setup
 
-```bash
+### 1️⃣ Clone the repository
+
+```
+git clone https://github.com/nandini33525/Finance-Tracker.git
+cd Finance-Tracker
+```
+
+### 2️⃣ Setup Backend
+
+```
 cd backend
 npm install
-npm run dev          # Starts on http://localhost:5000
+npm start
 ```
 
-You should see:
+### 3️⃣ Setup Frontend
+
 ```
-✅  MongoDB connected: cluster0.xxxxx.mongodb.net
-🚀  Server running on http://localhost:5000  [development]
-```
-
----
-
-### 4. Start the Frontend
-
-```bash
-cd ../frontend
+cd frontend
 npm install
-npm start            # Starts on http://localhost:3000
+npm start
 ```
 
 ---
 
-## 🔑 How Data Persistence Works
+## 🔐 Environment Variables
 
-| Action | What Happens |
-|--------|-------------|
-| **Register** | New User document created in MongoDB; JWT issued |
-| **Login** | JWT issued; stored in `localStorage` |
-| **Use app** | Every API call sends JWT → backend scopes data to `req.user._id` |
-| **Logout** | JWT removed from `localStorage`; **MongoDB data untouched** |
-| **Login again** | Same JWT flow → all expenses and goals restored from DB |
-| **Different user logs in** | Different `_id` → different data; zero overlap |
+Create a `.env` file in backend folder and add:
 
----
-
-## 🛡️ API Endpoints
-
-### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Create account |
-| POST | `/api/auth/login` | Sign in, get JWT |
-| GET  | `/api/auth/me` | Get current user (protected) |
-| PUT  | `/api/auth/profile` | Update profile (protected) |
-| PUT  | `/api/auth/password` | Change password (protected) |
-
-### Expenses (all protected)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/api/expenses` | All user's expenses |
-| POST   | `/api/expenses` | Create expense |
-| PUT    | `/api/expenses/:id` | Update expense |
-| DELETE | `/api/expenses/:id` | Delete expense |
-
-### Goals (all protected)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/api/goals` | All user's goals |
-| POST   | `/api/goals` | Create goal |
-| PUT    | `/api/goals/:id` | Update goal |
-| DELETE | `/api/goals/:id` | Delete goal |
-
----
-
-## 🌐 Deploy
-
-### Backend → Render / Railway
-1. Push to GitHub
-2. Create Web Service → connect repo
-3. Build command: `npm install`
-4. Start command: `node server.js`
-5. Add env vars (MONGO_URI, JWT_SECRET, CLIENT_URL)
-
-### Frontend → Vercel
-1. Push `frontend/` to GitHub (or as subdirectory)
-2. Import to Vercel
-3. Add `REACT_APP_API_URL=https://your-backend.onrender.com/api`
-4. Deploy
-
----
-
-## 🐛 Delete Bug Fix (from earlier)
-
-The original "undefined ID" bug is fixed in `routes/expenses.js`:
-
-```js
-// ✅ FIXED — uses _id (MongoDB ObjectId) and scopes to current user
-const expense = await Expense.findOneAndDelete({
-  _id:  req.params.id,   // Correct field name
-  user: req.user._id,    // Security: user can only delete their own
-});
+```
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
 ```
 
-And in the frontend `useExpenses.js`:
-```js
-// ✅ FIXED — uses expense._id not expense.id
-await api.delete(`/expenses/${id}`);
-setExpenses((prev) => prev.filter((e) => e._id !== id));
-```
+---
+
+## 📌 Future Enhancements
+
+* Bank API integration
+* Advanced AI predictions
+* Mobile app version
+* Notifications & alerts
+
+---
+
+## 👩‍💻 Author
+
+Nandini Baranwal
