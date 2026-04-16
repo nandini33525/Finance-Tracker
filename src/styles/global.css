@@ -1,0 +1,77 @@
+/* src/styles/global.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  min-height: 100vh;
+  background: #05050e;
+  font-family: 'Instrument Sans', sans-serif;
+  color: #e2e8f0;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 3px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #1a1a2e; border-radius: 4px; }
+
+/* Reset inputs */
+input, select, textarea, button {
+  font-family: 'Instrument Sans', sans-serif;
+  color-scheme: dark;
+}
+input:focus, select:focus, textarea:focus { outline: none; }
+
+/* ── Utility classes ───────────────────────────────── */
+.hov-nav  { transition: all .18s; cursor: pointer; border-radius: 10px; }
+.hov-nav:hover { background: rgba(255,255,255,.05) !important; }
+
+.hov-card { transition: transform .22s, box-shadow .22s; }
+.hov-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,.5) !important; }
+
+.hov-btn  { transition: all .2s; cursor: pointer; }
+.hov-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+.hov-row  { transition: background .12s; }
+.hov-row:hover { background: rgba(255,255,255,.04) !important; }
+
+.icon-b {
+  transition: all .15s;
+  border: none; cursor: pointer;
+  background: transparent;
+  border-radius: 8px; padding: 6px 8px; font-size: 14px;
+}
+.icon-b:hover { background: rgba(255,255,255,.09); }
+
+/* ── Animations ───────────────────────────────────── */
+@keyframes fadeUp   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop      { 0% { transform: scale(.92); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes alertIn  { from { opacity: 0; transform: translateY(-24px) scale(.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes marquee  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+
+.fu  { animation: fadeUp .38s ease both; }
+.fu2 { animation: fadeUp .38s .07s ease both; }
+.fu3 { animation: fadeUp .38s .14s ease both; }
+.fu4 { animation: fadeUp .38s .21s ease both; }
+.fu5 { animation: fadeUp .38s .28s ease both; }
+
+.modal-wrap { animation: pop .22s cubic-bezier(.34, 1.56, .64, 1); }
+.alert-wrap { animation: alertIn .35s cubic-bezier(.34, 1.56, .64, 1); }
+
+/* Spinner */
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
